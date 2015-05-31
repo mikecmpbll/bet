@@ -15,13 +15,17 @@ module Bet
         
         return send("ew_#{__method__}") if opts[:ew]
 
-        returns = c(opts[:stake], opts[:prices].reduce(:*))
+        returns = c(opts[:stake], prices.reduce(:*))
         profit  = returns - opts[:stake]
 
-        [returns, profit, opts[:stake]]
+        {
+          returns: returns,
+          profit: profit,
+          outlay: opts[:stake]
+        }
       end
-      alias :acca, :accumulator
-      alias :parlay, :accumulator
+      alias_method :acca, :accumulator
+      alias_method :parlay, :accumulator
     end
   end
 end

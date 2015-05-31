@@ -11,8 +11,8 @@ module Bet
         block: 9
       }.each do |ord, n|
         define_method(ord) do |opts|
-          prices = extract_prices(opts)
-          raise ArgumentError, "Wrong number of prices (#{prices.size} for #{n})" if prices.size != n
+          results = extract_prices(opts)
+          raise ArgumentError, "Wrong number of results (#{results.size} for #{n})" if results.size != n
           opts[:min_size] = 2
           full_cover(opts)
         end
@@ -28,8 +28,8 @@ module Bet
         block_with_singles: 9
       }.each do |ord, n|
         define_method(ord) do |opts|
-          prices = extract_prices(opts)
-          raise ArgumentError, "Wrong number of prices (#{prices.size} for #{n})" if prices.size != n
+          results = extract_prices(opts)
+          raise ArgumentError, "Wrong number of results (#{results.size} for #{n})" if results.size != n
           full_cover(opts)
         end
       end 
@@ -39,18 +39,30 @@ module Bet
         opts   = parse_opts(opts)
         opts   = { min_size: 1 }.merge(opts)
 
-        num_bets = 0
-        returns = (opts[:min_size]..opts[:prices].length).to_a.map do |n|
-          win_prices.combination(n).map do |multis|
-            num_bets += 1
-            acca(stake: opts[:stake], prices: multis)
+        num_bets = (opts[:min_size]..prices.length).to_a.map do |n|
+          (1..prices.length).to_a.combination(n).to_a.length
+        end.reduce(:+)
+
+        winning_prices = if prices.is_a?(Hash)
+            prices.select{ |_,v| win_place_lose?(v) == :win }.keys
+          else
+            prices
+          end
+
+        returns = (opts[:min_size]..winning_prices.length).to_a.map do |n|
+          winning_prices.combination(n).map do |multis|
+            acca(stake: opts[:stake], prices: multis)[:returns]
           end.reduce(:+)
         end.reduce(:+)
 
-        total_stake = num_bets * stake
-        profit = returns - total_stake
+        outlay = num_bets * opts[:stake]
+        profit = returns - outlay
 
-        [returns, profit, total_stake]
+        {
+          returns: returns,
+          profit: profit,
+          outlay: outlay
+        }
       end
     end
   end
