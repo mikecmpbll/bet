@@ -45,6 +45,11 @@ Some examples for the good folks of github and beyond:
 # of price and win/price/loss representation, here's array format:
 Bet::Calc.single(1.2) # or .single([1.2])
 # => {:returns=>1.2, :profit=>0.19999999999999996, :outlay=>1}
+# you'll notice the float imprecision, if you want accurate floating
+# point calculations use BigDecimal:
+require 'bigdecimal'
+Bet::Calc.single(BigDecimal.new('1.2'))[:returns].to_f
+# => 1.2
 
 Bet::Calc.double([1.2, 5.3])
 # => {:returns=>6.359999999999999, :profit=>5.359999999999999, :outlay=>1}
@@ -53,6 +58,7 @@ Bet::Calc.double([1.2, 5.3])
 # the symbolic format for the win/place/loss result
 { -1 => :loss, 0 => :place, 1 => :win }
 
+# format is price => result
 Bet::Calc.yankee({ 2.3 => :win, 1.2 => :place, 4.5 => :loss, 11.0 => :win })
 # => {:returns=>25.299999999999997, :profit=>14.299999999999997, :outlay=>11}
 
@@ -64,11 +70,10 @@ Bet::Calc.yankee({ 2.3 => :win, 1.2 => :place, 4.5 => :loss, 11.0 => :win }, sta
 
 ## Todo
 
-1. Use big decimal instead of float 'cus float imprecision innit
 1. Implement each way bets properly
 2. Add dutching and shit like that
 3. Maybe implement support for other price formats (fractional & 'murican)
-3. Write tests
+4. Write tests
 
 ## Contributing
 
