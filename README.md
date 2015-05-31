@@ -28,13 +28,13 @@ Bet::Calc.block # 9 selections (502 bets)
 Bet::Calc.full_cover(prices, min_size: 2)
 
 # types of complete full cover (inc. singles)
-Bet::Calc.patent # 3 selections (4 bets)
-Bet::Calc.lucky15 # 4 selections (11 bets)
-Bet::Calc.lucky31 # 5 selections (26 bets)
-Bet::Calc.lucky63 # 6 selections (57 bets)
-Bet::Calc.super_heinz_with_singles # 7 selections (120 bets)
-Bet::Calc.goliath_with_singles # 8 selections (247 bets)
-Bet::Calc.block_with_singles # 9 selections (502 bets)
+Bet::Calc.patent # 3 selections (7 bets)
+Bet::Calc.lucky15 # 4 selections (15 bets)
+Bet::Calc.lucky31 # 5 selections (31 bets)
+Bet::Calc.lucky63 # 6 selections (63 bets)
+Bet::Calc.super_heinz_with_singles # 7 selections (127 bets)
+Bet::Calc.goliath_with_singles # 8 selections (235 bets)
+Bet::Calc.block_with_singles # 9 selections (511 bets)
 Bet::Calc.full_cover(prices, min_size: 1) # 1 is default, option can be omitted
 ```
 
