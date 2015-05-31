@@ -10,11 +10,11 @@ module Bet
         goliath: 8,
         block: 9
       }.each do |ord, n|
-        define_method(ord) do |opts|
-          results = extract_prices(opts)
+        define_method(ord) do |results, opts = {}|
+          results = parse_prices(results)
           raise ArgumentError, "Wrong number of results (#{results.size} for #{n})" if results.size != n
           opts[:min_size] = 2
-          full_cover(opts)
+          full_cover(results, opts)
         end
       end
 
@@ -27,15 +27,15 @@ module Bet
         goliath_with_singles: 8,
         block_with_singles: 9
       }.each do |ord, n|
-        define_method(ord) do |opts|
-          results = extract_prices(opts)
+        define_method(ord) do |results, opts = {}|
+          results = parse_prices(results)
           raise ArgumentError, "Wrong number of results (#{results.size} for #{n})" if results.size != n
-          full_cover(opts)
+          full_cover(results, opts)
         end
-      end 
+      end
 
-      def full_cover(opts)
-        prices = extract_prices(opts)
+      def full_cover(prices, opts = {})
+        prices = parse_prices(prices)
         opts   = parse_opts(opts)
         opts   = { min_size: 1 }.merge(opts)
 
@@ -51,7 +51,7 @@ module Bet
 
         returns = (opts[:min_size]..winning_prices.length).to_a.map do |n|
           winning_prices.combination(n).map do |multis|
-            acca(stake: opts[:stake], prices: multis)[:returns]
+            acca(multis, stake: opts[:stake])[:returns]
           end.reduce(:+)
         end.reduce(:+)
 

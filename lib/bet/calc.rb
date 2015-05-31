@@ -28,7 +28,7 @@ module Bet
           stake * price
         end
 
-        def extract_prices(opts_or_prices)
+        def parse_prices(opts_or_prices)
           case opts_or_prices
           when Hash
             opts_or_prices[:prices] ? extract_prices(opts_or_prices[:prices]) : opts_or_prices

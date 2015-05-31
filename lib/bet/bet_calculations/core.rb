@@ -2,15 +2,15 @@ module Bet
   module BetCalculations
     module Core
       { single: 1, double: 2, treble: 3 }.each do |ord, n|
-        define_method(ord) do |opts|
-          prices = extract_prices(opts)
+        define_method(ord) do |prices, opts = {}|
+          prices = parse_prices(prices)
           raise ArgumentError, "Wrong number of prices (#{prices.size} for #{n})" if prices.size != n
-          acca(opts)
+          acca(prices, opts)
         end
       end
 
-      def accumulator(opts)
-        prices = extract_prices(opts)
+      def accumulator(prices, opts = {})
+        prices = parse_prices(prices)
         opts   = parse_opts(opts)
         
         return send("ew_#{__method__}") if opts[:ew]
