@@ -48,8 +48,8 @@ Bet::Calc.single(1.2) # or .single([1.2])
 # you'll notice the float imprecision, if you want accurate floating
 # point calculations use BigDecimal:
 require 'bigdecimal'
-Bet::Calc.single(BigDecimal.new('1.2'))[:returns].to_f
-# => 1.2
+Bet::Calc.single(BigDecimal.new('1.2'))[:profit].to_f
+# => 0.2
 
 Bet::Calc.double([1.2, 5.3])
 # => {:returns=>6.359999999999999, :profit=>5.359999999999999, :outlay=>1}
