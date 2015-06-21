@@ -14,8 +14,8 @@ module Bet
 
     attr_accessor :returns, :profit, :outlay
 
-    def initialize(bet_type, opts)
-      @returns, @profit, @outlay = send(bet_type, opts).values
+    def initialize(bet_type, *args)
+      @returns, @profit, @outlay = self.class.send(bet_type, *args).values
     end
 
     class << self
