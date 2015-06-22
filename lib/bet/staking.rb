@@ -2,7 +2,7 @@ module Bet
   module Staking
     class << self
       def dutch(prices, risk = 1)
-        denom = prices.combination(2).map{ |c| c.reduce(:*) }.reduce(:+)
+        denom = prices.combination(2).map{ |c| c[0] * c[1] }.reduce(:+)
 
         stakes = prices.map.with_index do |p, i|
           (prices.dup.tap{ |a| a.delete_at(i) }.reduce(:*) * risk)
