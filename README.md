@@ -41,8 +41,8 @@ Bet::Calc.full_cover(prices, min_size: 1) # 1 is default, option can be omitted
 Some examples of bet calculations for you good folks:
 
 ```ruby
-# you can provide an array of winning prices, or a results hash of
-# price and win/price/loss representation, here's array format:
+# you can provide an array of winning prices, or a results array of
+# price and win/price/loss representation, here's the former:
 Bet::Calc.single(1.2) # or .single([1.2])
 # => {:returns=>1.2, :profit=>0.19999999999999996, :outlay=>1}
 # you'll notice the float imprecision, if you want accurate floating
@@ -54,17 +54,17 @@ Bet::Calc.single(BigDecimal.new('1.2'))[:profit].to_f
 Bet::Calc.double([1.2, 5.3])
 # => {:returns=>6.359999999999999, :profit=>5.359999999999999, :outlay=>1}
 
-# etc! here's the results hash format. you can use numerical or the
+# etc! here's the results array format. you can use numerical or the
 # symbolic format for the win/place/loss result
 { -1 => :loss, 0 => :place, 1 => :win }
 
 # format is price => result
-Bet::Calc.yankee({ 2.3 => :win, 1.2 => :place, 4.5 => :loss, 11.0 => :win })
+Bet::Calc.yankee([[2.3, :win], [1.2, :place], [4.5, :loss], [11.0, :win]])
 # => {:returns=>25.299999999999997, :profit=>14.299999999999997, :outlay=>11}
 
 # the default stake per bet is 1, you can change this with the
 # `stake` option.
-Bet::Calc.yankee({ 2.3 => :win, 1.2 => :place, 4.5 => :loss, 11.0 => :win }, stake: 0.45)
+Bet::Calc.yankee([[2.3, :win], [1.2, :place], [4.5, :loss], [11.0, :win]], stake: 0.45)
 # => {:returns=>11.385, :profit=>6.435, :outlay=>4.95}
 ```
 
