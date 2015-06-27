@@ -43,8 +43,8 @@ module Bet
           (1..prices.length).to_a.combination(n).to_a.length
         end.reduce(:+)
 
-        winning_prices = if prices.is_a?(Hash)
-            prices.select{ |_,v| win_place_lose?(v) == :win }.keys
+        winning_prices = if prices.first.is_a?(Array)
+            prices.select{ |_,v| win_place_lose?(v) == :win }.map(&:first)
           else
             prices
           end

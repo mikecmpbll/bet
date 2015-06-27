@@ -28,15 +28,8 @@ module Bet
           stake * price
         end
 
-        def parse_prices(opts_or_prices)
-          case opts_or_prices
-          when Hash
-            opts_or_prices[:prices] ? extract_prices(opts_or_prices[:prices]) : opts_or_prices
-          when Numeric
-            [opts_or_prices]
-          else
-            opts_or_prices
-          end
+        def parse_prices(prices)
+          Array(prices)
         end
 
         def parse_opts(opts_or_prices)
