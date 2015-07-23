@@ -90,7 +90,8 @@ Bet::Staking.dutch([4.8, 5.3, 12], 100)
 ## Todo
 
 1. Implement each way bets properly
-2. Write tests
+2. Possibly look at other more complex bet types such as Any-to-Come and ones like Union Jack. (I've never known anyone who's ever placed an ATC bet and I haven't taken the time to really understand them, but if there's a demand then create an issue on Github and I'll look in to it.)
+3. Write tests
 
 ## Contributing
 
